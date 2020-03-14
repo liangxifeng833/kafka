@@ -1,0 +1,41 @@
+#============== kafka ===================
+spring:
+  profiles:
+    active: dev1
+  kafka:
+    # ָ��kafka server�ĵ�ַ����Ⱥ�������м䣬���Ÿ���
+    bootstrap-servers: 192.168.9.200:9092,192.168.9.201:9092,192.168.9.202:9092
+    #=============== provider  =======================
+    # д��ʧ��ʱ�����Դ�������leader�ڵ�ʧЧ��һ��repli�ڵ�������Ϊleader�ڵ㣬��ʱ���ܳ���д��ʧ�ܣ�
+    # ��retrisΪ0ʱ��produce�����ظ���retirs�ط�����ʱrepli�ڵ���ȫ��Ϊleader�ڵ㣬���������Ϣ��ʧ��
+    producer:
+      retries: 0
+      # ÿ������������Ϣ������,produce���۵�һ�����ݣ�һ�η���
+      batch-size: 16384
+      # produce��������һ�η��ͣ������С�ﵽbuffer.memory�ͷ�������
+      buffer-memory: 33554432
+      #procedureҪ��leader�ڿ����������֮ǰ�յ���ȷ���������ڿ��Ʒ��ͼ�¼�ڷ���˵ĳ־û�����ֵ����Ϊ���£�
+      #acks = 0 �������Ϊ�㣬�������߽�����ȴ����Է��������κ�ȷ�ϣ��ü�¼��������ӵ��׽��ֻ���������Ϊ�ѷ��͡�����������£��޷���֤���������յ���¼�������������ý�������Ч����Ϊ�ͻ���ͨ������֪���κι��ϣ���Ϊÿ����¼���ص�ƫ����ʼ������Ϊ-1��
+      #acks = 1 ����ζ��leader�Ὣ��¼д���䱾����־��������ȴ����и�������������ȫȷ�ϼ���������Ӧ������������£����leader��ȷ�ϼ�¼������ʧ�ܣ����ڽ����ݸ��Ƶ����еĸ���������֮ǰ�����¼���ᶪʧ��
+      #acks = all ����ζ��leader���ȴ�������ͬ����������ȷ�ϼ�¼���Ᵽ֤��ֻҪ����һ��ͬ��������������Ȼ����¼�Ͳ��ᶪʧ��������ǿ�����ı�֤�����൱��acks = -1�����á�
+      #�������õ�ֵΪ��all, -1, 0, 1
+      acks: 1
+      # key/value���л�,ָ����Ϣkey����Ϣ��ı���뷽ʽ
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #bootstrap-servers: 192.168.9.200:9092,192.168.9.201,192:9092.168.9.202:9092
+    consumer:
+      # ָ��һ��Ĭ�ϵ�����, ������kafka�У�ͬһ���е�consumer�����ȡ��ͬһ����Ϣ������groud.id��������
+      group-id: kafka-1
+      # earliest�����������������ύoffsetʱ�����ύ��offset��ʼ���ѣ����ύ��offsetʱ����ͷ��ʼ����
+      # latest�����������������ύoffsetʱ�����ύ��offset��ʼ���ѣ����ύ��offsetʱ�������²����ĸ÷����µ�����
+      # none��topic���������������ύoffsetʱ����offset��ʼ���ѣ�ֻҪ��һ�����������ύ��offset�������쳣
+      auto-offset-reset: earliest
+      #key/value�����л�
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #bootstrap-servers: 192.168.9.200:9092,192.168.9.201,192.168.9.202
+      #�����Զ��ύoffset
+      enable-auto-commit: true
+      #���'enable.auto.commit'Ϊtrue����������ƫ���Զ��ύ��Kafka��Ƶ�ʣ��Ժ���Ϊ��λ����Ĭ��ֵΪ5000
+      auto-commit-interval: 100

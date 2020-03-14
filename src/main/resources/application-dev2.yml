@@ -1,0 +1,7 @@
+server:
+  port: 8200
+spring:
+  kafka:
+    consumer:
+      # ָ��һ��Ĭ�ϵ�����, ������kafka�У�ͬһ���е�consumer�����ȡ��ͬһ����Ϣ������groud.id��������
+      group-id: kafka-2
