@@ -4,12 +4,12 @@ spring:
     active: dev1
   kafka:
     # ָ��kafka server�ĵ�ַ����Ⱥ�������м䣬���Ÿ���
-    bootstrap-servers: 192.168.9.200:9092,192.168.9.201:9092,192.168.9.202:9092
+    bootstrap-servers: 127.0.0.1:9092,127.0.0.1:9093
     #=============== provider  =======================
     # д��ʧ��ʱ�����Դ�������leader�ڵ�ʧЧ��һ��repli�ڵ�������Ϊleader�ڵ㣬��ʱ���ܳ���д��ʧ�ܣ�
     # ��retrisΪ0ʱ��produce�����ظ���retirs�ط�����ʱrepli�ڵ���ȫ��Ϊleader�ڵ㣬���������Ϣ��ʧ��
     producer:
-      retries: 0
+      retries: 1
       # ÿ������������Ϣ������,produce���۵�һ�����ݣ�һ�η���
       batch-size: 16384
       # produce��������һ�η��ͣ������С�ﵽbuffer.memory�ͷ�������
@@ -19,14 +19,14 @@ spring:
       #acks = 1 ����ζ��leader�Ὣ��¼д���䱾����־��������ȴ����и�������������ȫȷ�ϼ���������Ӧ������������£����leader��ȷ�ϼ�¼������ʧ�ܣ����ڽ����ݸ��Ƶ����еĸ���������֮ǰ�����¼���ᶪʧ��
       #acks = all ����ζ��leader���ȴ�������ͬ����������ȷ�ϼ�¼���Ᵽ֤��ֻҪ����һ��ͬ��������������Ȼ����¼�Ͳ��ᶪʧ��������ǿ�����ı�֤�����൱��acks = -1�����á�
       #�������õ�ֵΪ��all, -1, 0, 1
-      acks: 1
+      acks: all
       # key/value���л�,ָ����Ϣkey����Ϣ��ı���뷽ʽ
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       #bootstrap-servers: 192.168.9.200:9092,192.168.9.201,192:9092.168.9.202:9092
     consumer:
       # ָ��һ��Ĭ�ϵ�����, ������kafka�У�ͬһ���е�consumer�����ȡ��ͬһ����Ϣ������groud.id��������
-      group-id: kafka-1
+      group-id: group-1
       # earliest�����������������ύoffsetʱ�����ύ��offset��ʼ���ѣ����ύ��offsetʱ����ͷ��ʼ����
       # latest�����������������ύoffsetʱ�����ύ��offset��ʼ���ѣ����ύ��offsetʱ�������²����ĸ÷����µ�����
       # none��topic���������������ύoffsetʱ����offset��ʼ���ѣ�ֻҪ��һ�����������ύ��offset�������쳣
